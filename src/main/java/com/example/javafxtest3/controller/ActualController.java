@@ -84,6 +84,7 @@ public class ActualController {
             return;
         }
         operation.triggerFloorInput(floor - 1, -1);
+        submitButton1.setDisable(true);
     }
 
     @FXML
@@ -110,6 +111,7 @@ public class ActualController {
         }
 
         operation.triggerLiftInput(lift - 1, floor - 1);
+        submitButton2.setDisable(true);
     }
 
     @FXML
