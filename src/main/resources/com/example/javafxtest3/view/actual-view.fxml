@@ -41,7 +41,7 @@
               </rowConstraints>
                <children>
                   <Button fx:id="advanceTimeButton" mnemonicParsing="false" onAction="#advanceFrame" text="Advance Time" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <TextField fx:id="tickBox" promptText="Number of Ticks" GridPane.rowIndex="1" />
+                  <TextField fx:id="tickBox" promptText="Number of Ticks" onKeyTyped="#editTime" GridPane.rowIndex="1" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

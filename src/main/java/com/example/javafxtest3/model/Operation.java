@@ -96,11 +96,11 @@ public class Operation {
         Lift lift = lifts[liftIndex];
         WaitingPriorityQueue<Input,InputPriority> queue = liftInputQueue[liftIndex];
         Input inputCompleted = lift.getInputAttempting();
-        System.out.print("Debug - LiftIndex: " + liftIndex + ", Input Attempted: " + inputCompleted + "; ");
+//        System.out.print("Debug - LiftIndex: " + liftIndex + ", Input Attempted: " + inputCompleted + "; ");
         if (inputCompleted instanceof FloorInput){
             FloorInput floorInputCompleted = (FloorInput) inputCompleted;
             for (int i = 0; i < numLifts; i++){
-                System.out.println("Debug - Operations.assignNewInput(): " + i);
+//                System.out.println("Debug - Operations.assignNewInput(): " + i);
                 liftInputQueue[i].remove(floorInputCompleted.getLiftQueueIndexes()[i]);
             }
         } else if (inputCompleted instanceof LiftInput){
@@ -114,9 +114,14 @@ public class Operation {
             Input input = getUnattemptedInput(liftIndex);
             if(input == null) lift.endOperation();
             else {
-                lift.startOperation(input);
-                if (input instanceof FloorInput){((FloorInput) input).attempt(liftIndex);}
-                else{input.attempt();}
+                if(!input.isAttempting()) {
+                    lift.startOperation(input);
+                    if (input instanceof FloorInput) {
+                        ((FloorInput) input).attempt(liftIndex);
+                    } else {
+                        input.attempt();
+                    }
+                } else lift.endOperation();
             }
         }
     }
@@ -177,9 +182,14 @@ public class Operation {
                 Input input = getUnattemptedInput(i);
                 if(input == null) lift.endOperation();
                 else {
-                    lift.startOperation(input);
-                    if (input instanceof FloorInput){((FloorInput) input).attempt(i);}
-                    else{input.attempt();}
+                    if (!input.isAttempting()) {
+                        lift.startOperation(input);
+                        if (input instanceof FloorInput) {
+                            ((FloorInput) input).attempt(i);
+                        } else {
+                            input.attempt();
+                        }
+                    } else lift.endOperation();
                 }
             } else if (!queue.isEmpty() && lift.isInMotion()) {
                 InputPriority[] newPriorities = new InputPriority[queue.getCount()];

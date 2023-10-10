@@ -51,7 +51,8 @@ public class ActualController {
         upDownChoiceBox.setValue("Up");
         submitButton1.setDisable(true);
         submitButton2.setDisable(true);
-        operation = new Operation(numLifts, numFloors, waitingTime, movingTime);
+        advanceTimeButton.setDisable(true);
+        operation = new Operation(numLifts, numFloors, movingTime, waitingTime);
         updateList();
     }
 
@@ -131,6 +132,7 @@ public class ActualController {
         }
         for (int i = 0; i < numTicks; i++) {
             operation.operate();
+//            updateList();
         }
         updateList();
     }
@@ -178,12 +180,21 @@ public class ActualController {
         try {
             int lift = Integer.parseInt(liftTextField.getText());
             int floor = Integer.parseInt(floorTextField2.getText());
-            submitButton2.setDisable(operation.getLiftInputs()[lift][floor].isTriggered());
             if ((floor >= 1 && floor <= numFloors) && (lift >= 1 && lift <= numLifts)) {
                 submitButton2.setDisable(operation.getLiftInputs()[lift-1][floor-1].isTriggered());
             }
         } catch (NumberFormatException | NullPointerException e) {
             submitButton1.setDisable(true);
+        }
+    }
+
+    @FXML
+    public void editTime(Event event){
+        try{
+            int time = Integer.parseInt(tickBox.getText());
+            advanceTimeButton.setDisable(time <= 0);
+        } catch (NumberFormatException | NullPointerException e){
+            advanceTimeButton.setDisable(true);
         }
     }
 
