@@ -2,6 +2,10 @@ package com.example.javafxtest3.model;
 
 import com.example.javafxtest3.model.PA2A.Node;
 import com.example.javafxtest3.model.PA2A.PriorityQueue;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import java.util.Arrays;
 
@@ -71,6 +75,18 @@ public class Lift {
 
     @Override
     public String toString() {
-        return String.format("Lift %d, Floor %d, %s, State %s, Time Left: %d, Target Floor: %d ", liftIndex+1, currentFloor+1, (direction == -1 ? "Moving Down" : (direction == 0 ? "Not Moving" : "Moving Up")), (state == 0 ? "Idle" : (state == 1 ? "Moving" : "Waiting")), timeCounter, (inputAttempting == null? 0 : inputAttempting.getRelatedFloor()));
+        return String.format("Lift %d, Floor %d, %s, State %s, Time Left: %d, Target Floor: %d", liftIndex+1, currentFloor+1, (direction == -1 ? "Moving Down" : (direction == 0 ? "Not Moving" : "Moving Up")), (state == 0 ? "Idle" : (state == 1 ? "Moving" : "Waiting")), timeCounter, (inputAttempting == null? 0 : inputAttempting.getRelatedFloor()));
+    }
+
+    public IntegerProperty numberProperty() {
+        return new SimpleIntegerProperty(liftIndex+1);
+    }
+
+    public IntegerProperty floorProperty() {
+        return new SimpleIntegerProperty(currentFloor+1);
+    }
+
+    public StringProperty directionProperty() {
+        return new SimpleStringProperty((direction == -1 ? "Moving Down" : (direction == 0 ? "Not Moving" : "Moving Up")));
     }
 }

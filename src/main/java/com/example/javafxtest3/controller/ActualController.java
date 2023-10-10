@@ -1,11 +1,14 @@
 package com.example.javafxtest3.controller;
 
+import com.example.javafxtest3.model.Lift;
 import com.example.javafxtest3.model.Operation;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -109,8 +112,12 @@ public class ActualController {
     public void advanceFrame(ActionEvent actionEvent) {
         int numTicks;
         try {
-            numTicks = Integer.parseInt(tickBox.getText());
-            if (numTicks <= 0) throw new NumberFormatException();
+            if (tickBox.getText().isEmpty()) {
+                numTicks = 0;
+            } else {
+                numTicks = Integer.parseInt(tickBox.getText());
+                if (numTicks <= 0) throw new NumberFormatException();
+            }
         } catch (NumberFormatException n) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Please input a positive integer.");
             alert.showAndWait();
@@ -124,7 +131,25 @@ public class ActualController {
 
     private void updateList() {
         //liftMenu.setItems(FXCollections.observableArrayList(operation.getLifts()));
+        TableColumn<Lift, String> numberColumn = new TableColumn<>("Number");
+        numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
 
+        TableColumn<Lift, String> floorColumn = new TableColumn<>("Floor");
+        floorColumn.setCellValueFactory(new PropertyValueFactory<>("floor"));
+
+        TableColumn<Lift, String> directionColumn = new TableColumn<>("Direction");
+        directionColumn.setCellValueFactory(new PropertyValueFactory<>("direction"));
+
+        ObservableList<Lift> liftObservableList = FXCollections.observableArrayList(operation.getLifts());
+        liftTable.setItems(liftObservableList);
+
+        liftTable.getColumns().remove(0);
+        liftTable.getColumns().remove(0);
+        liftTable.getColumns().remove(0);
+        liftTable.getColumns().addAll(numberColumn, floorColumn, directionColumn);
+
+        //TableColumn<Lift, Integer> ageColumn = new TableColumn<>("Age");
+        //ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
     }
 
     @FXML

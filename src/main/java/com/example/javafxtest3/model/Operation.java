@@ -54,6 +54,7 @@ public class Operation {
 
     public void triggerFloorInput(int floor, int direction){
         FloorInput floorInput = floorInputs[floor][(direction+1)/2];
+        if (floorInput.isTriggered()) return;
         InputPriority[] priorities = new InputPriority[numLifts];
         int[] indexes = new int[numLifts];
 
@@ -67,6 +68,7 @@ public class Operation {
 
     public void triggerLiftInput(int liftIndex, int floor){
         LiftInput liftInput = liftInputs[liftIndex][floor];
+        if (liftInput.isTriggered()) return;
         Lift lift = lifts[liftIndex];
         InputPriority priority = new InputPriority(lift,liftInput,moving,waiting);
         int index = addInput(liftIndex,liftInput,priority);
