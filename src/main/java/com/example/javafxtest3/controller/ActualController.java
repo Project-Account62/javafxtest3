@@ -74,6 +74,7 @@ public class ActualController {
                     Alert alert = new Alert(Alert.AlertType.WARNING, String.format("A lift at the bottom floor cannot go down.", numFloors));
                     alert.showAndWait();
                 }
+                operation.triggerFloorInput(floor - 1, -1);
             }
         } catch (NumberFormatException n) {
             Alert alert = new Alert(Alert.AlertType.WARNING, String.format("Please input an integer from 1 to %d for the floor", numFloors));
@@ -84,7 +85,6 @@ public class ActualController {
             alert.showAndWait();
             return;
         }
-        operation.triggerFloorInput(floor - 1, -1);
         submitButton1.setDisable(true);
     }
 
