@@ -50,4 +50,15 @@ public class HelloController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void numChange(){
+        try{
+            int numLifts = Integer.parseInt(numLift.getText());
+            int numFloors = Integer.parseInt(numFloor.getText());
+            button.setDisable(numFloors <= 0 || numLifts <= 0);
+        } catch (NullPointerException | NumberFormatException e){
+            button.setDisable(true);
+        }
+    }
 }

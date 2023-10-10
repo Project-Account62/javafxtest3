@@ -9,10 +9,10 @@
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
    <TextField maxHeight="0.0" maxWidth="0.0" opacity="0.0" />
-   <TextField fx:id="numLift" promptText="Number of Lifts" />
-   <TextField fx:id="numFloor" promptText="Number of Floors" />
+   <TextField fx:id="numLift" promptText="Number of Lifts" onKeyTyped="#numChange"/>
+   <TextField fx:id="numFloor" promptText="Number of Floors" onKeyTyped="#numChange"/>
    <TextField fx:id="movingTime" promptText="Moving Time (Default 5)" />
    <TextField fx:id="waitingTime" promptText="Waiting Time (Default 3)" />
-  <Button fx:id="button" onAction="#onGoButtonClick" text="Go!" />
+  <Button fx:id="button" onAction="#onGoButtonClick" text="Go!" disable="true"/>
    <Label fx:id="label" />
 </VBox>
