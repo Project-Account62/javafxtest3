@@ -32,6 +32,8 @@ public class ActualController {
 
     public static int numFloors;
     public static int numLifts;
+    public static int waitingTime;
+    public static int movingTime;
 
     private Operation operation;
     @FXML
@@ -47,7 +49,9 @@ public class ActualController {
         liftTextField.setPromptText("Lift (1 to " + numLifts + ")");
         upDownChoiceBox.setItems(FXCollections.observableArrayList("Up", "Down"));
         upDownChoiceBox.setValue("Up");
-        operation = new Operation(numLifts, numFloors, 5, 3);
+        submitButton1.setDisable(true);
+        submitButton2.setDisable(true);
+        operation = new Operation(numLifts, numFloors, waitingTime, movingTime);
         updateList();
     }
 
@@ -65,7 +69,7 @@ public class ActualController {
                 }
                 operation.triggerFloorInput(floor - 1, 1);
             } else {
-                if (floor == numFloors) {
+                if (floor == 1) {
                     Alert alert = new Alert(Alert.AlertType.WARNING, String.format("A lift at the bottom floor cannot go down.", numFloors));
                     alert.showAndWait();
                 }
@@ -154,12 +158,31 @@ public class ActualController {
 
     @FXML
     public void editFloor(Event event) {
-        return;
+        try {
+            int floor = Integer.parseInt(floorTextField1.getText());
+            int direction = (upDownChoiceBox.getValue().toString().equals("Up")) ? 1:0;
+            if ((floor == 1 && direction == 0) || (floor == numFloors && direction == 1) || (floor < 1) || (floor > numFloors)){
+                submitButton1.setDisable(true);
+            } else {
+                submitButton1.setDisable(operation.getFloorInputs()[floor-1][direction].isTriggered());
+            }
+        } catch(NumberFormatException | NullPointerException e){
+            submitButton1.setDisable(true);
+        }
     }
 
     @FXML
     public void editLift(Event event) {
-        return;
+        try {
+            int lift = Integer.parseInt(liftTextField.getText());
+            int floor = Integer.parseInt(floorTextField2.getText());
+            submitButton2.setDisable(operation.getLiftInputs()[lift][floor].isTriggered());
+            if ((floor >= 1 && floor <= numFloors) && (lift >= 1 && lift <= numLifts)) {
+                submitButton2.setDisable(operation.getLiftInputs()[lift-1][floor-1].isTriggered());
+            }
+        } catch (NumberFormatException | NullPointerException e) {
+            submitButton1.setDisable(true);
+        }
     }
 
 }

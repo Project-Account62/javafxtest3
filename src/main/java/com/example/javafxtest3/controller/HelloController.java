@@ -20,6 +20,10 @@ public class HelloController {
     private Button button;
     @FXML
     private Label label;
+    @FXML
+    private TextField movingTime;
+    @FXML
+    private TextField waitingTime;
 
     @FXML
     protected void onGoButtonClick() {
@@ -29,6 +33,10 @@ public class HelloController {
             if (ActualController.numLifts <= 0 || ActualController.numFloors <= 0) {
                 label.setText("Input positive integers only!");
             }
+            if (movingTime.getText().isEmpty()) ActualController.movingTime = 5;
+            else ActualController.movingTime = Integer.parseInt(movingTime.getText());
+            if (waitingTime.getText().isEmpty()) ActualController.waitingTime = 3;
+            else ActualController.waitingTime = Integer.parseInt(waitingTime.getText());
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("/com/example/javafxtest3/view/actual-view.fxml"));
             button.getScene().getWindow().hide();
