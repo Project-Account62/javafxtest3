@@ -51,7 +51,6 @@ public class ActualController {
         upDownChoiceBox.setValue("Up");
         submitButton1.setDisable(true);
         submitButton2.setDisable(true);
-        advanceTimeButton.setDisable(true);
         operation = new Operation(numLifts, numFloors, movingTime, waitingTime);
         updateList();
     }
@@ -193,8 +192,10 @@ public class ActualController {
         try{
             int time = Integer.parseInt(tickBox.getText());
             advanceTimeButton.setDisable(time <= 0);
-        } catch (NumberFormatException | NullPointerException e){
+        } catch (NumberFormatException e){
             advanceTimeButton.setDisable(true);
+        } catch (NullPointerException e){
+            advanceTimeButton.setDisable(false);
         }
     }
 
